@@ -151,13 +151,7 @@ export const addVideo = async (req, res, next) => {
         
       }}).limit(limit).skip(skip).sort({TrendValue: -1});
       
-      const totalVideos = await Videos.countDocuments()
-      // res.send({
-      //   videos,
-      //   currentPage: page,
-      //   totalVideos: totalVideos,
-      //   totalPages: Math.ceil(totalVideos/limit),
-      // })
+
       res.status(200).json(videos);
      
 
@@ -180,12 +174,7 @@ export const addVideo = async (req, res, next) => {
       }}).limit(limit).skip(skip).sort({date: -1});
       
       const totalVideos = await Videos.countDocuments()
-      // res.send({
-      //   videos,
-      //   currentPage: page,
-      //   totalVideos: totalVideos,
-      //   totalPages: Math.ceil(totalVideos/limit),
-      // })
+
       res.status(200).json(videos);
      
 
@@ -219,16 +208,12 @@ export const addVideo = async (req, res, next) => {
         
       }}).limit(200).sort({date: -1});
      
-      
       res.status(200).json(videos);
      
-
     } catch (err) {
       next(err);
     }
   };
-
-
 
 
 
@@ -242,3 +227,60 @@ export const getByTag = async (req, res, next) => {
     next(err);
   }
 };
+
+//////////// index page fetches ///////////////////////////
+
+ export const indexNew = async (req, res, next) => {
+    const query = req.query.q;
+    try {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 15;
+      const skip = (page -1) * limit;
+
+      const videos = await Videos.find({
+         category: { $regex: query, $options: "i",
+        
+      }}).limit(limit).skip(skip).sort({date: -1});
+      
+
+      res.status(200).json(videos);
+     
+
+    } catch (err) {
+      next(err);
+    }
+  };
+
+   export const indexRandom = async (req, res, next) => {
+  try {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+     const videos = await Videos.aggregate([{ $sample: { size: 15 } }]);
+   res.status(200).json(videos);
+   
+   } catch (err) {
+     next(err);
+   }
+ };
+
+ export const categoryIndex = async (req, res, next) => {
+    const query = req.query.q;
+    try {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 15;
+      const skip = (page -1) * limit;
+
+      const videos = await Videos.find({
+         category: { $regex: query, $options: "i",
+        
+      }}).limit(limit).skip(skip).sort({TrendValue: -1});
+      
+
+      res.status(200).json(videos);
+     
+
+    } catch (err) {
+      next(err);
+    }
+  };

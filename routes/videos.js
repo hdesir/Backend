@@ -1,5 +1,5 @@
 import express from "express";
-import {addVideo, random, trend, search, search2, addView, getByTag, category, news, channel, categoryNew} from "../controllers/video.js"
+import {addVideo, random, trend, search, search2, addView, getByTag, category, news, channel, categoryNew, indexNew, indexRandom, categoryIndex} from "../controllers/video.js"
 import { getVideo } from "../controllers/video.js";
 
 const router = express.Router()
@@ -20,5 +20,9 @@ router.get("/categoryNew", categoryNew)
 router.get("/news", news)
 router.get("/channel", channel)
 router.get("/tag", getByTag)
+router.get("/indexN", indexNew)
+router.get("/indexR", indexRandom)
+router.get("/indexCat", categoryIndex)
+
 
 export default router;
