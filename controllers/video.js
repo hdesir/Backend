@@ -235,7 +235,7 @@ export const getByTag = async (req, res, next) => {
     try {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const page = req.query.page || 1;
-      const limit = req.query.limit || 15;
+      const limit = req.query.limit || 8;
       const skip = (page -1) * limit;
 
       const videos = await Videos.find({
@@ -255,7 +255,7 @@ export const getByTag = async (req, res, next) => {
    export const indexRandom = async (req, res, next) => {
   try {
       res.setHeader('Access-Control-Allow-Origin', '*');
-     const videos = await Videos.aggregate([{ $sample: { size: 15 } }]);
+     const videos = await Videos.aggregate([{ $sample: { size: 5 } }]);
    res.status(200).json(videos);
    
    } catch (err) {
@@ -268,7 +268,7 @@ export const getByTag = async (req, res, next) => {
     try {
       res.setHeader('Access-Control-Allow-Origin', '*');
       const page = req.query.page || 1;
-      const limit = req.query.limit || 15;
+      const limit = req.query.limit || 8;
       const skip = (page -1) * limit;
 
       const videos = await Videos.find({
