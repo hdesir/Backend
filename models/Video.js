@@ -75,6 +75,12 @@ const VideoSchema = new mongoose.Schema(
             default: "",
             
         },
+        
+        videoID:{
+            type: String,
+            require: true,
+            
+        },
 
     },
 )
