@@ -58,10 +58,7 @@ export const addVideo = async (req, res, next) => {
    const query = req.query.q;
   try {
       res.setHeader('Access-Control-Allow-Origin', '*');
-     const videos = await Videos.find({
-         category: { $regex: query, $options: "i",
-        
-      }}).aggregate([{ $sample: { size: 10 } }]);
+     const videos = await Videos.aggregate([{ $sample: { size: 10 } }]);
    res.status(200).json(videos);
    
    } catch (err) {
