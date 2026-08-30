@@ -61,7 +61,7 @@ export const addVideo = async (req, res, next) => {
      const videos = await Videos.find({
          category: { $regex: query, $options: "i",
         
-      }}).aggregate([{ $sample: { size: 40 } }]);
+      }}).aggregate([{ $sample: { size: 10 } }]);
    res.status(200).json(videos);
    
    } catch (err) {
