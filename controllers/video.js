@@ -254,15 +254,20 @@ export const getByTag = async (req, res, next) => {
   };
 
    export const indexRandom = async (req, res, next) => {
+    const query = req.query.q;
   try {
       res.setHeader('Access-Control-Allow-Origin', '*');
-     const videos = await Videos.aggregate([{ $sample: { size: 5 } }]);
+    //  const sample = await Video.find({category: "Docs"})
+     const videos = await Video.aggregate([
+      { $match: { category: query } },
+    { $sample: { size: 10 } }]).limit(10);
    res.status(200).json(videos);
    
    } catch (err) {
      next(err);
    }
  };
+
 
  export const categoryIndex = async (req, res, next) => {
     const query = req.query.q;
