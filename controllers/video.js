@@ -253,13 +253,13 @@ export const getByTag = async (req, res, next) => {
     }
   };
 
-   export const indexRandom = async (req, res, next) => {
-    const query = req.query.q;
+  export const indexRandom = async (req, res, next) => {
+  const query = req.query.q;
   try {
       res.setHeader('Access-Control-Allow-Origin', '*');
     //  const sample = await Video.find({category: "Docs"})
      const videos = await Video.aggregate([
-      { $match: { category: query } },
+    { $match: { category: query } },
     { $sample: { size: 10 } }]).limit(10);
    res.status(200).json(videos);
    
