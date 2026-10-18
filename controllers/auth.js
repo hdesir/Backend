@@ -9,13 +9,20 @@ export const signup = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({ ...req.body, password: hash });
-
-    await newUser.save();
+    await newUser.save()        
+    .then(newUser => {
+            res.json({
+                id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+            });
+        });
     res.status(200).send("User has been created!");
   } catch (err) {
     next(err);
   }
 };
+
 
 export const signin = async (req, res, next) => {
   try {
