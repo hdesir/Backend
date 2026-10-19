@@ -8,13 +8,14 @@ export const signup = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    const newUser = new User({ ...req.body, password: hash });
-    await newUser.save()        
-    .then(newUser => {
+    const user = new User({ ...req.body, password: hash });
+   
+    await user.save()        
+    .then(user => {
             res.json({
-                id: newUser._id,
-                name: newUser.name,
-                email: newUser.email,
+                id: user._id,
+                name: user.name,
+                email: user.email,
             });
         });
     res.status(200).send("User has been created!");
