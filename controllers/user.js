@@ -3,22 +3,23 @@ import User from "../models/User.js";
 import Video from "../models/Video.js";
 
 export const update = async (req, res, next) => {
-  if (req.params.id === req.user.id) {
+ 
+
     try {
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      );
-      res.status(200).json(updatedUser);
-    } catch (err) {
-      next(err);
+
+      const userId = req.params.id
+
+      const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true, runValidators: true });
+        
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-  } else {
-    return next(createError(403, "You can update only your account!"));
-  }
+  
 };
 
 export const deleteUser = async (req, res, next) => {
