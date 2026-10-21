@@ -1,6 +1,7 @@
 import { createError } from "../error.js";
 import User from "../models/User.js";
 import Video from "../models/Video.js";
+import bcrypt from "bcryptjs";
 
 export const update = async (req, res, next) => {
  
@@ -21,6 +22,35 @@ export const update = async (req, res, next) => {
     }
   
 };
+
+
+export const updatePassword = async (req, res, next) => {
+ 
+
+    try {
+
+      const userId = req.params.id
+      const password = req.body.password
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedNewPassword = await bcrypt.hash(password, salt);
+
+      const updatedUser = await User.findByIdAndUpdate(userId,
+      { $set: { password: hashedNewPassword } },
+      { new: true, runValidators: true }
+    ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  
+};
+
 
 export const deleteUser = async (req, res, next) => {
   if (req.params.id === req.user.id) {
