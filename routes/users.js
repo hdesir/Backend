@@ -7,6 +7,7 @@ import {
   unsubscribe,
   like,
   dislike,
+  updatePassword
 } from "../controllers/user.js";
 // import { verifyToken } from "../verifyToken.js";
 
