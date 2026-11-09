@@ -269,7 +269,7 @@ export const getByTag = async (req, res, next) => {
  };
 
 
- export const categoryIndex = async (req, res, next) => {
+export const categoryIndex = async (req, res, next) => {
     const query = req.query.q;
     try {
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -282,8 +282,9 @@ export const getByTag = async (req, res, next) => {
         
       }}).limit(limit).skip(skip).sort({TrendValue: -1});
       
+      const videosR = await videos.aggregate()
 
-      res.status(200).json(videos);
+      res.status(200).json(videosR);
      
 
     } catch (err) {
