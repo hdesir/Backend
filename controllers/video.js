@@ -239,11 +239,11 @@ export const getByTag = async (req, res, next) => {
       const limit = req.query.limit || 8;
       const skip = (page -1) * limit;
 
-      const videos = await Videos.aggregate(  
+      const videos = await Videos.aggregate([
         { $match: { category: query} },
         { $sort: { date: -1 }}
       
-      ).limit(limit).skip(skip);
+      ]).limit(limit).skip(skip);
 
      
       
@@ -284,10 +284,9 @@ export const categoryIndex = async (req, res, next) => {
          category: { $regex: query, $options: "i",
         
       }}).limit(limit).skip(skip).sort({TrendValue: -1});
-      
-      const videosR = await videos.aggregate()
+    
 
-      res.status(200).json(videosR);
+      res.status(200).json(videos);
      
 
     } catch (err) {
