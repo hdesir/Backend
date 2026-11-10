@@ -244,7 +244,7 @@ export const getByTag = async (req, res, next) => {
         
       }}).limit(limit).skip(skip).sort({date: -1});
 
-      const videosR = await videos.aggregate()
+      const videosR = await videos.aggregate([])
       
 
       res.status(200).json(videosR);
