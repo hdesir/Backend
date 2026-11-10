@@ -281,7 +281,7 @@ export const categoryIndex = async (req, res, next) => {
       const limit = req.query.limit || 8;
       const skip = (page -1) * limit;
 
-       const videos = await Videos.aggregate([
+      const videos = await Videos.aggregate([
         { $match: { category: query} },
         { $sort: { date: -1 } },
         { $limit: 10 },
@@ -289,6 +289,7 @@ export const categoryIndex = async (req, res, next) => {
       
       ]).skip(skip);
 
+    
 
       res.status(200).json(videos);
      
@@ -297,3 +298,4 @@ export const categoryIndex = async (req, res, next) => {
       next(err);
     }
   };
+
