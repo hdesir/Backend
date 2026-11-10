@@ -243,9 +243,11 @@ export const getByTag = async (req, res, next) => {
          category: { $regex: query, $options: "i",
         
       }}).limit(limit).skip(skip).sort({date: -1});
+
+      const videosR = await videos.aggregate()
       
 
-      res.status(200).json(videos);
+      res.status(200).json(videosR);
      
 
     } catch (err) {
