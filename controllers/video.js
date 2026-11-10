@@ -243,7 +243,7 @@ export const getByTag = async (req, res, next) => {
         { $match: { category: query} },
         { $sort: { date: -1 }}
       
-      ).limit(limit).skip(skip).sort({date: -1});
+      ).limit(limit).skip(skip);
 
      
       
