@@ -242,7 +242,7 @@ export const getByTag = async (req, res, next) => {
       const videos = await Videos.aggregate([
         { $match: { category: query} },
         { $sort: { date: -1 } },
-        { $limit: 12 },
+        { $limit: 10 },
         { $sample: { size: 15}}
       
       ]).skip(skip);
